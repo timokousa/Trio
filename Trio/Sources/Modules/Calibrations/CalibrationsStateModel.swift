@@ -72,7 +72,7 @@ extension Calibrations {
                     .getNSManagedObject(with: glucoseValuesIds, context: viewContext)
 
                 if let lastGlucose = glucoseObjects.first {
-                    let unfiltered = lastGlucose.glucose
+                    let unfiltered = calibrationService.uncalibrate(value: Double(lastGlucose.glucose))
                     let calibration = Calibration(x: Double(unfiltered), y: Double(glucose))
 
                     calibrationService.addCalibration(calibration)

@@ -23,6 +23,7 @@ protocol CalibrationService {
     func removeLast()
 
     func calibrate(value: Int) -> Double
+    func uncalibrate(value: Double) -> Double
 }
 
 final class BaseCalibrationService: CalibrationService, Injectable {
@@ -74,7 +75,7 @@ final class BaseCalibrationService: CalibrationService, Injectable {
     }
 
     var intercept: Double {
-        guard calibrations.count >= 1 else {
+        guard calibrations.count >= 2 else {
             return 0
         }
         let xs = calibrations.map(\.x)
@@ -87,6 +88,10 @@ final class BaseCalibrationService: CalibrationService, Injectable {
 
     func calibrate(value: Int) -> Double {
         linearRegression(value)
+    }
+
+    func uncalibrate(value: Double) -> Double {
+        inverseLinearRegression(value)
     }
 
     func addCalibration(_ calibration: Calibration) {
@@ -115,5 +120,9 @@ final class BaseCalibrationService: CalibrationService, Injectable {
 
     private func linearRegression(_ x: Int) -> Double {
         (intercept + slope * Double(x)).clamped(Config.minValue ... Config.maxValue)
+    }
+
+    private func inverseLinearRegression(_ y: Double) -> Double {
+        (y.clamped(Config.minValue ... Config.maxValue) - intercept) / slope
     }
 }
