@@ -233,6 +233,9 @@ jobs:
           #curl https://github.com/loopandlearn/G7SensorKit/commit/d86ac8e9cd523d1267587dd70c96597125eef7ab.patch | git apply --directory=G7SensorKit -v --whitespace=fix
           #curl https://github.com/loopandlearn/G7SensorKit/commit/205054e7537723c2aec58d807634b4853f687244.patch | git apply --directory=G7SensorKit -v --whitespace=fix
 
+          # Disable Libre smoothing
+          curl https://github.com/timokousa/LibreTransmitter/commit/f69fc9120bb5381b432d32ab35126d9198aa60f6.patch | git apply --directory=LibreTransmitter -v --whitespace=fix
+
           # Add patches for additional customization by following the templates above,
           # and make sure to specify the submodule by setting "--directory=(submodule_name)".
           # Several patches may be added per submodule.
